@@ -155,21 +155,27 @@ nav a:hover {
 
 /* ==========================================================================
    Author's custom styles
+   by jsliang (jenny@jsliang.com)
    ========================================================================== */
 
+article a, article a:visited {
+    color: #E44D26;
+    text-decoration: none;
+}
 
+article a:hover {
+    text-decoration: underline;
+}
 
+footer a,
+footer a:visited {
+    color: white;
+    text-decoration: underline;
+}
 
-
-
-
-
-
-
-
-
-
-
+footer a:hover {
+    text-decoration: none;
+}
 
 /* ==========================================================================
    Media Queries
