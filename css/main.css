@@ -248,12 +248,12 @@ footer a:hover {
 
     .main article {
         float: left;
-        width: 57%;
+        width: 75%;
     }
 
     .main aside {
         float: right;
-        width: 28%;
+        width: 10%;
     }
 }
 
