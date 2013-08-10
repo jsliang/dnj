@@ -14,6 +14,31 @@ def get_img_list(path):
                 img_list.append(file_path)
     return img_list
 
+def get_thumbnail_name(path):
+    [dir_file_path, ext] = path.rsplit(".")
+    return "%s_thumb.%s" % (dir_file_path, ext)
+
+def get_thumbnail_list(img_list, thumb_height):
+    thumb_list = []
+    for img_path in img_list:
+        if "_thumb" in img_path:
+            continue
+
+        try:
+            img = Image.open(img_path)
+            (width, height) = img.size
+            thumb_width = int(float(thumb_height) / height * width)
+
+            thumb_path = get_thumbnail_name(img_path)
+            thumb_size = (thumb_width, thumb_height)
+            thumb = img.resize(thumb_size, Image.ANTIALIAS)
+            thumb.save(thumb_path)
+
+            thumb_list.append(thumb_path)
+        except IOError:
+            continue
+    return thumb_list
+
 def get_img_info_items(img_list):
     img_info_items = {}
     for img_path in img_list:
@@ -36,6 +61,10 @@ def get_img_info_items(img_list):
     return img_info_items
 
 img_list = get_img_list(os.path.abspath("."))
-img_info_items = get_img_info_items(img_list)
+thumb_list = get_thumbnail_list(img_list, 800)
+img_info_items = get_img_info_items(thumb_list)
 
-print json.dumps(img_info_items)
+print "img_info_items = {"
+for key in sorted(img_info_items.iterkeys()):
+    print "'%s': %s," % (key, json.dumps(img_info_items[key]))
+print "}"

@@ -3,115 +3,115 @@
   var $, img_info_items;
 
   img_info_items = {
-    "000_74e0d699303ea06c4fac1fb9dedeae8b": {
-      "path": "photos/P_20130726_145305.jpg",
-      "height": 1536,
-      "width": 2048
+    '000_e739737fc70a2d9ff229776452a0a500': {
+      "path": "photos/P_20130726_145305_thumb.jpg",
+      "height": 800,
+      "width": 1066
     },
-    "001_301c5dec6483298f75cfe4b2072a88e6": {
-      "path": "photos/P_20130726_172519.jpg",
-      "height": 2048,
-      "width": 1536
+    '001_e6111a85acaca2defdc620d810554592': {
+      "path": "photos/P_20130726_172519_thumb.jpg",
+      "height": 800,
+      "width": 600
     },
-    "002_726c42fea07f006ad94527aa7be545da": {
-      "path": "photos/P_20130726_173556.jpg",
-      "height": 2048,
-      "width": 1536
+    '002_1dca694ad67e3f070d07b75ecbd04549': {
+      "path": "photos/P_20130726_173556_thumb.jpg",
+      "height": 800,
+      "width": 600
     },
-    "003_1a66ecfffb3ed22afe8d01382a3b596a": {
-      "path": "photos/P_20130726_180934.jpg",
-      "height": 1324,
-      "width": 2048
+    '003_a01c83f1022212bbe59ff14a9690c860': {
+      "path": "photos/P_20130726_180934_thumb.jpg",
+      "height": 800,
+      "width": 1237
     },
-    "004_d0d939a95f9c4143f2f15dcfbdb2c005": {
-      "path": "photos/P_20130726_181402.jpg",
-      "height": 2048,
-      "width": 1536
+    '004_0a98ce1ff396006133911e9993617a0c': {
+      "path": "photos/P_20130726_181402_thumb.jpg",
+      "height": 800,
+      "width": 600
     },
-    "005_e2122c452efac9a9e5e72a9c75f7df46": {
-      "path": "photos/P_20130726_181418.jpg",
-      "height": 1536,
-      "width": 2048
+    '005_093436be48634aa814e3626fa1c49633': {
+      "path": "photos/P_20130726_181418_thumb.jpg",
+      "height": 800,
+      "width": 1066
     },
-    "006_467b442668a44f8b08acf6ea565f23ea": {
-      "path": "photos/P_20130726_181430.jpg",
-      "height": 1536,
-      "width": 2048
+    '006_55a45b1e84a024cc58f7c16cc620e4d0': {
+      "path": "photos/P_20130726_181430_thumb.jpg",
+      "height": 800,
+      "width": 1066
     },
-    "007_abdf6131dfdb630e98acaf736bae7a47": {
-      "path": "photos/P_20130726_182002.jpg",
-      "height": 1226,
-      "width": 2048
+    '007_47f7eda5d30fa0e87a5d54721cb33152': {
+      "path": "photos/P_20130726_182002_thumb.jpg",
+      "height": 800,
+      "width": 1336
     },
-    "008_362c08eeff4df32e908b96f2b4769238": {
-      "path": "photos/P_20130726_185245.jpg",
-      "height": 2048,
-      "width": 1536
+    '008_2de6fd00c3881531999b9d0076d330a4': {
+      "path": "photos/P_20130726_185245_thumb.jpg",
+      "height": 800,
+      "width": 600
     },
-    "009_ad4b0644ea09cb33305544dd61efd01c": {
-      "path": "photos/P_20130726_190933.jpg",
-      "height": 2048,
-      "width": 1536
+    '009_25246233b99f3c9dfe5b2496764330d7': {
+      "path": "photos/P_20130726_190933_thumb.jpg",
+      "height": 800,
+      "width": 600
     },
-    "010_5d54a51984474f4c31348a573b0a6c24": {
-      "path": "photos/P_20130728_125106.jpg",
-      "height": 1536,
-      "width": 2048
+    '010_4dd04f2fda2863878c30aaf2f1716029': {
+      "path": "photos/P_20130728_125106_thumb.jpg",
+      "height": 800,
+      "width": 1066
     },
-    "011_ba40d9c8d66a1e1416ed53d1c54e486d": {
-      "path": "photos/P_20130728_125118.jpg",
-      "height": 1536,
-      "width": 2048
+    '011_4e45cfc5386810faedc65676e360a3b5': {
+      "path": "photos/P_20130728_125118_thumb.jpg",
+      "height": 800,
+      "width": 1066
     },
-    "012_69312c9521e79119bebe9dcd68c97104": {
-      "path": "photos/P_20130728_133143.jpg",
-      "height": 1536,
-      "width": 2048
+    '012_9ef8717ebb1ebfea7b4957dc6455728d': {
+      "path": "photos/P_20130728_133143_thumb.jpg",
+      "height": 800,
+      "width": 1066
     },
-    "013_8deff758bbb1cfdcac9d4f40173561c8": {
-      "path": "photos/P_20130728_133553.jpg",
-      "height": 1536,
-      "width": 2048
+    '013_b52b7dedb617dbde55c60427218a70a9': {
+      "path": "photos/P_20130728_133553_thumb.jpg",
+      "height": 800,
+      "width": 1066
     },
-    "014_bc0c918baf3ff82358d49dc5204e2245": {
-      "path": "photos/P_20130728_134840.jpg",
-      "height": 2048,
-      "width": 1536
+    '014_70a65391c62aed9ef86727183e1b9ebe': {
+      "path": "photos/P_20130728_134840_thumb.jpg",
+      "height": 800,
+      "width": 600
     },
-    "015_03d6131b7ce839ecc9443520a9a704c6": {
-      "path": "photos/P_20130729_100441.jpg",
-      "height": 1536,
-      "width": 2048
+    '015_8e45e21fa53942a2a37ea66dd75d06f1': {
+      "path": "photos/P_20130729_100441_thumb.jpg",
+      "height": 800,
+      "width": 1066
     },
-    "016_44a4fb043e4c9598aea3251a5073ba9d": {
-      "path": "photos/P_20130729_100457.jpg",
-      "height": 1536,
-      "width": 2048
+    '016_20acd19ae6a9e0cf3644151e2729afe1': {
+      "path": "photos/P_20130729_100457_thumb.jpg",
+      "height": 800,
+      "width": 1066
     },
-    "017_db412277a38e8021e1242a6b5ec8402b": {
-      "path": "photos/P_20130729_100515.jpg",
-      "height": 1536,
-      "width": 2048
+    '017_e857dd5e57ac3b2c666735f622e26290': {
+      "path": "photos/P_20130729_100515_thumb.jpg",
+      "height": 800,
+      "width": 1066
     },
-    "018_5d6c7b1d5bf60cec461211f3f083c46b": {
-      "path": "photos/P_20130729_123351.jpg",
-      "height": 1536,
-      "width": 2048
+    '018_cbaa4f13b9b2533c4df43e716e9bbc91': {
+      "path": "photos/P_20130729_123351_thumb.jpg",
+      "height": 800,
+      "width": 1066
     },
-    "019_5e9b2748b4162939dcae67ba173b14e4": {
-      "path": "photos/P_20130729_130722.jpg",
-      "height": 1536,
-      "width": 2048
+    '019_d5a039b27fdacc36e832abe6e94adf1f': {
+      "path": "photos/P_20130729_130722_thumb.jpg",
+      "height": 800,
+      "width": 1066
     },
-    "020_13f391d711050da92a5e27367aa0d70e": {
-      "path": "photos/P_20130729_162603.jpg",
-      "height": 1536,
-      "width": 2048
+    '020_e7653d4811098eab706412cf3cbd09fb': {
+      "path": "photos/P_20130729_162603_thumb.jpg",
+      "height": 800,
+      "width": 1066
     },
-    "021_27924afc04eaf90ad8e1e5d8f1b9749d": {
-      "path": "photos/P_20130729_171837.jpg",
-      "height": 1536,
-      "width": 2048
+    '021_6bba884eb46a624a2e0459491fb243f1': {
+      "path": "photos/P_20130729_171837_thumb.jpg",
+      "height": 800,
+      "width": 1066
     }
   };
 
