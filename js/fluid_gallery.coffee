@@ -51,9 +51,10 @@ $.fn.extend
 
         width = height / orig_height * orig_width
 
-        $(this).width(width).height(height)
+        if width < orig_width and height < orig_height
+            $(this).width(width).height(height)
 
-    _resizeImage: (ratio) ->
+    _resizeImage: (ratio)->
         orig_width = $(this).data("orig_width")
         orig_height = $(this).data("orig_height")
         current_width = $(this).width()
@@ -79,7 +80,7 @@ $.fn.extend
             # calculate current_total_width
             current_total_width = 0
             for img_id in img_id_list
-                do (img_id) ->
+                do (img_id)->
                     current_total_width += $("#" + img_id).width()
 
             # caculate resize ratio
@@ -87,7 +88,7 @@ $.fn.extend
 
             # resize images of this row according to resize_ratio
             for img_id in img_id_list
-                do (img_id) ->
+                do (img_id)->
                     $("#" + img_id)._resizeImage(resize_ratio)
 
 $(document).ready ()->

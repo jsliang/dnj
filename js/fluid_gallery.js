@@ -153,7 +153,9 @@
       orig_width = $(this).data("orig_width");
       orig_height = $(this).data("orig_height");
       width = height / orig_height * orig_width;
-      return $(this).width(width).height(height);
+      if (width < orig_width && height < orig_height) {
+        return $(this).width(width).height(height);
+      }
     },
     _resizeImage: function(ratio) {
       var current_height, current_width, new_height, new_width, orig_height, orig_width;
