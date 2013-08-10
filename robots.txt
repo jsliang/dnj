@@ -1,0 +1,5 @@
+# robotstxt.org/
+# put it in the top-level directory of your web server
+
+User-agent: *
+Disallow: /
