@@ -118,8 +118,14 @@
   $ = jQuery;
 
   $.fn.extend({
-    gallery: function(min_height, img_info_items) {
+    gallery: function(img_info_items, option) {
       var gallery, img_gallery, img_id, img_info;
+      if (option == null) {
+        option = {
+          min_height: 200,
+          margin: 6
+        };
+      }
       gallery = $(this);
       img_gallery = (function() {
         var _results;
@@ -129,16 +135,17 @@
           gallery.append("<img id='" + img_id + "' src='" + img_info.path + "' />");
           $("#" + img_id).data("orig_width", img_info.width);
           $("#" + img_id).data("orig_height", img_info.height);
-          _results.push($("#" + img_id)._setHeight(min_height));
+          $("#" + img_id).css("margin", option.margin / 2);
+          _results.push($("#" + img_id)._setHeight(option.min_height));
         }
         return _results;
       })();
-      gallery._relayout(img_info_items);
+      gallery._relayout(img_info_items, option);
       return $(window).resize(function() {
         gallery.children("img").each(function() {
-          return $(this)._setHeight(min_height);
+          return $(this)._setHeight(option.min_height);
         });
-        return gallery._relayout(img_info_items);
+        return gallery._relayout(img_info_items, option);
       });
     },
     _setHeight: function(height) {
@@ -160,7 +167,7 @@
         return $(this).width(new_width).height(new_height);
       }
     },
-    _relayout: function(img_info_items) {
+    _relayout: function(img_info_items, option) {
       var current_total_width, img_id, img_id_list, max_total_width, resize_ratio, row_top, rows, stretch_row;
       max_total_width = $(this).innerWidth() - 10;
       rows = {};
@@ -186,7 +193,7 @@
             img_id = img_id_list[_i];
             _fn(img_id);
           }
-          resize_ratio = max_total_width / current_total_width;
+          resize_ratio = (max_total_width - option.margin * (img_id_list.length - 1)) / current_total_width;
           _results.push((function() {
             var _j, _len1, _results1;
             _results1 = [];
@@ -205,9 +212,7 @@
   });
 
   $(document).ready(function() {
-    var min_height;
-    min_height = 200;
-    return $("#gallery").gallery(min_height, img_info_items);
+    return $("#gallery").gallery(img_info_items);
   });
 
 }).call(this);

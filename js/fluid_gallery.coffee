@@ -26,7 +26,7 @@ img_info_items = {
 $ = jQuery
 
 $.fn.extend
-    gallery: (min_height, img_info_items)->
+    gallery: (img_info_items, option = {min_height: 200, margin: 6})->
         gallery = $(this)
 
         img_gallery = for img_id, img_info of img_info_items
@@ -34,14 +34,16 @@ $.fn.extend
 
             $("#" + img_id).data("orig_width", img_info.width)
             $("#" + img_id).data("orig_height", img_info.height)
-            $("#" + img_id)._setHeight(min_height)
+            $("#" + img_id).css("margin", option.margin / 2)
 
-        gallery._relayout(img_info_items)
+            $("#" + img_id)._setHeight(option.min_height)
+
+        gallery._relayout(img_info_items, option)
 
         $(window).resize ()->
             gallery.children("img").each ()->
-                $(this)._setHeight(min_height)
-            gallery._relayout(img_info_items)
+                $(this)._setHeight(option.min_height)
+            gallery._relayout(img_info_items, option)
 
     _setHeight: (height)->
         orig_width = $(this).data("orig_width")
@@ -62,7 +64,7 @@ $.fn.extend
         if new_width < orig_width and new_height < orig_height
             $(this).width(new_width).height(new_height)
 
-    _relayout: (img_info_items)->
+    _relayout: (img_info_items, option)->
         max_total_width = $(this).innerWidth() - 10
 
         rows = {}
@@ -81,7 +83,7 @@ $.fn.extend
                     current_total_width += $("#" + img_id).width()
 
             # caculate resize ratio
-            resize_ratio = max_total_width / current_total_width
+            resize_ratio = (max_total_width - option.margin * (img_id_list.length - 1)) / current_total_width
 
             # resize images of this row according to resize_ratio
             for img_id in img_id_list
@@ -89,5 +91,4 @@ $.fn.extend
                     $("#" + img_id)._resizeImage(resize_ratio)
 
 $(document).ready ()->
-    min_height = 200
-    $("#gallery").gallery(min_height, img_info_items)
+    $("#gallery").gallery(img_info_items)
