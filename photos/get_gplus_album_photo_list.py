@@ -19,7 +19,7 @@ import json
 # ============== #
 
 # source album of photos
-gplus_album_url = "https://plus.google.com/photos/103268673393726667616/albums/5906286878841962305/"
+gplus_album_url = "https://plus.google.com/photos/103268673393726667616/albums/5576164790666764673"
 
 # maximum photo thumbnail dimension
 max_thumb_dimension = 800
@@ -83,9 +83,18 @@ def get_album_img_info_items(album_info, max_thumb_dimension):
         thumbnail_url = "/".join(
             [photo_url_split[0], "s%d" % max_thumb_dimension, photo_url_split[1]])
 
+        width = float(photo.width.text)
+        height = float(photo.height.text)
+        if width > height:
+            thumb_width = max_thumb_dimension
+            thumb_height = max_thumb_dimension / width * height
+        else:
+            thumb_height = max_thumb_dimension
+            thumb_width = max_thumb_dimension / height * width
+
         img_info = {"path": thumbnail_url,
-                    "width": int(photo.width.text),
-                    "height": int(photo.height.text)}
+                    "width": int(thumb_width),
+                    "height": int(thumb_height)}
 
         m = hashlib.md5()
         m.update("%(path)s %(width)s %(height)s" % img_info)
@@ -100,7 +109,8 @@ if __name__ == "__main__":
     album_info = get_userid_albumid(gplus_album_url)
     img_info_items = get_album_img_info_items(album_info, max_thumb_dimension)
 
-    print "img_info_items = {"
+    json_str = "img_info_items = {"
     for key in sorted(img_info_items.iterkeys()):
-        print "'%s': %s," % (key, json.dumps(img_info_items[key]))
-    print "}"
+        json_str += "'%s': %s," % (key, json.dumps(img_info_items[key]))
+    json_str += "}"
+    print json_str
