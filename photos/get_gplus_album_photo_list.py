@@ -1,12 +1,35 @@
 #!/usr/bin/python
 
+"""
+
+Retrieve links to photo thumbnails in a Google Plus album, and return a {path, width, height} dictionary of each photo.
+
+Album URL and maximum thumbnail dimension are both customizable.
+
+"""
+
 import gdata.geo
 import gdata.media
 import gdata.photos.service
 import hashlib
 import json
 
+# ============== #
+# SETTINGS BEGIN #
+# ============== #
+
+# source album of photos
 gplus_album_url = "https://plus.google.com/photos/103268673393726667616/albums/5906286878841962305/"
+
+# maximum photo thumbnail dimension
+max_thumb_dimension = 800
+
+# ============== #
+# SETTINGS  END  #
+# ============== #
+
+
+# DO NOT MODIFY CODES BELOW  #
 
 def get_userid_albumid(url):
     """
@@ -45,7 +68,7 @@ def get_userid_albumid(url):
         return None
 
 
-def get_album_img_info_items(album_info, max_size):
+def get_album_img_info_items(album_info, max_thumb_dimension):
     userid = album_info["userid"]
     albumnid = album_info["albumnid"]
 
@@ -58,7 +81,7 @@ def get_album_img_info_items(album_info, max_size):
         photo_url_split = photo_url.rsplit("/", 1)
 
         thumbnail_url = "/".join(
-            [photo_url_split[0], "s%d" % max_size, photo_url_split[1]])
+            [photo_url_split[0], "s%d" % max_thumb_dimension, photo_url_split[1]])
 
         img_info = {"path": thumbnail_url,
                     "width": int(photo.width.text),
@@ -75,8 +98,7 @@ def get_album_img_info_items(album_info, max_size):
 
 if __name__ == "__main__":
     album_info = get_userid_albumid(gplus_album_url)
-    max_size = 800
-    img_info_items = get_album_img_info_items(album_info, max_size)
+    img_info_items = get_album_img_info_items(album_info, max_thumb_dimension)
 
     print "img_info_items = {"
     for key in sorted(img_info_items.iterkeys()):

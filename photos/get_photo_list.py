@@ -1,9 +1,21 @@
 #!/usr/bin/python
 
+"""
+
+Retrieve paths to photos in the current working directory, and return a {path, width, height} dictionary of each photo.
+
+Maximum thumbnail dimension is customizable.
+
+"""
+
+# maximum photo thumbnail dimension
+max_thumb_dimension = 800
+
 from PIL import Image
 import hashlib
 import json
 import os
+
 
 def get_img_list(path):
     img_list = []
@@ -14,11 +26,13 @@ def get_img_list(path):
                 img_list.append(file_path)
     return img_list
 
+
 def get_thumbnail_name(path):
     [dir_file_path, ext] = path.rsplit(".")
     return "%s_thumb.%s" % (dir_file_path, ext)
 
-def get_thumbnail_list(img_list, thumb_height):
+
+def get_thumbnail_list(img_list, max_thumb_dimension):
     thumb_list = []
     for img_path in img_list:
         if "_thumb" in img_path:
@@ -27,10 +41,10 @@ def get_thumbnail_list(img_list, thumb_height):
         try:
             img = Image.open(img_path)
             (width, height) = img.size
-            thumb_width = int(float(thumb_height) / height * width)
+            thumb_width = int(float(max_thumb_dimension) / height * width)
 
             thumb_path = get_thumbnail_name(img_path)
-            thumb_size = (thumb_width, thumb_height)
+            thumb_size = (thumb_width, max_thumb_dimension)
             thumb = img.resize(thumb_size, Image.ANTIALIAS)
             thumb.save(thumb_path)
 
@@ -38,6 +52,7 @@ def get_thumbnail_list(img_list, thumb_height):
         except IOError:
             continue
     return thumb_list
+
 
 def get_img_info_items(img_list):
     img_info_items = {}
@@ -49,19 +64,19 @@ def get_img_info_items(img_list):
 
         (width, height) = img.size
         img_info = {"path": img_path,
-            "width": width,
-            "height": height}
+                    "width": width,
+                    "height": height}
 
         m = hashlib.md5()
         m.update("%(path)s %(width)s %(height)s" % img_info)
-        img_id = "%03d_%s" % ( len(img_info_items), m.hexdigest() )
-        img_info_item = { img_id: img_info }
+        img_id = "%03d_%s" % (len(img_info_items), m.hexdigest())
+        img_info_item = {img_id: img_info}
 
         img_info_items.update(img_info_item)
     return img_info_items
 
 img_list = get_img_list(os.path.abspath("."))
-thumb_list = get_thumbnail_list(img_list, 800)
+thumb_list = get_thumbnail_list(img_list, max_thumb_dimension)
 img_info_items = get_img_info_items(thumb_list)
 
 print "img_info_items = {"
