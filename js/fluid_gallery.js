@@ -453,6 +453,41 @@
   $ = jQuery;
 
   $.fn.extend({
+    fixedScrollTopBar: function(option) {
+      var scrolltop_bar, slowly_scroll_top;
+      if (option == null) {
+        option = {
+          opacity: 0.7
+        };
+      }
+      scrolltop_bar = $(this).clone();
+      $(this).css("opacity", 0);
+      scrolltop_bar.css("bottom", 0).css("position", "fixed").css("width", "100%").css("opacity", 0).click(slowly_scroll_top = function() {
+        var current_top;
+        current_top = $(window).scrollTop();
+        if (current_top > 1) {
+          $(window).scrollTop(Math.round(current_top / 2));
+          return setTimeout(slowly_scroll_top, 50);
+        } else {
+          return $(window).scrollTop(0);
+        }
+      }).hover((function() {
+        return $(this).css("opacity", 1);
+      }), (function() {
+        return $(this).css("opacity", option.opacity);
+      }));
+      $(window).scroll(function() {
+        if (scrolltop_bar.css("opacity") >= 1) {
+          return;
+        }
+        if ($(window).scrollTop() === 0 && scrolltop_bar.css("opacity") > 0) {
+          return scrolltop_bar.css("opacity", 0);
+        } else {
+          return scrolltop_bar.css("opacity", option.opacity);
+        }
+      });
+      return $("body").append(scrolltop_bar);
+    },
     gallery: function(img_info_items, option) {
       var gallery, img_gallery, img_id, img_info;
       if (option == null) {
@@ -549,7 +584,8 @@
   });
 
   $(document).ready(function() {
-    return $("#gallery").gallery(img_info_items);
+    $("#gallery").gallery(img_info_items);
+    return $("#scroll-top-bar").fixedScrollTopBar();
   });
 
 }).call(this);

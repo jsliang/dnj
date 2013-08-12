@@ -3,6 +3,36 @@ img_info_items = {'000_56b714ba2b1d867d41ce327b212d11c8': {"path": "https://lh3.
 $ = jQuery
 
 $.fn.extend
+    fixedScrollTopBar: (option = {opacity: 0.7})->
+        scrolltop_bar = $(this).clone()
+        $(this).css("opacity", 0)
+
+        scrolltop_bar.css("bottom", 0)
+            .css("position", "fixed")
+            .css("width", "100%")
+            .css("opacity", 0)
+            .click slowly_scroll_top = ()->
+                current_top = $(window).scrollTop()
+                if current_top > 1
+                    $(window).scrollTop( Math.round(current_top / 2) )
+                    setTimeout(slowly_scroll_top, 50)
+                else
+                    $(window).scrollTop(0)
+            .hover \
+                ( ()->$(this).css("opacity", 1) ), \ #handlerIn
+                ( ()->$(this).css("opacity", option.opacity) ) #handlerOut
+
+        $(window).scroll ()->
+            if scrolltop_bar.css("opacity") >= 1
+                return
+
+            if $(window).scrollTop() is 0 and scrolltop_bar.css("opacity") > 0
+                scrolltop_bar.css("opacity", 0)
+            else
+                scrolltop_bar.css("opacity", option.opacity)
+
+        $("body").append(scrolltop_bar)
+
     gallery: (img_info_items, option = {min_height: 200, margin: 6})->
         gallery = $(this)
 
@@ -70,3 +100,4 @@ $.fn.extend
 
 $(document).ready ()->
     $("#gallery").gallery(img_info_items)
+    $("#scroll-top-bar").fixedScrollTopBar()
