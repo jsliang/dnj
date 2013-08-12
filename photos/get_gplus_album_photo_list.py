@@ -19,10 +19,10 @@ import json
 # ============== #
 
 # source album of photos
-gplus_album_url = "https://plus.google.com/photos/103268673393726667616/albums/5576164790666764673"
+gplus_album_url = "https://plus.google.com/photos/100962871525684315897/albums/5635621775055301585"
 
 # maximum photo thumbnail dimension
-max_thumb_dimension = 800
+max_thumb_dimension = 700
 
 # ============== #
 # SETTINGS  END  #
