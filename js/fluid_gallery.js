@@ -497,6 +497,7 @@
         };
       }
       gallery = $(this);
+      gallery.css("text-align", "center");
       img_gallery = (function() {
         var _results;
         _results = [];

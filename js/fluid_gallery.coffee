@@ -35,6 +35,7 @@ $.fn.extend
 
     gallery: (img_info_items, option = {min_height: 200, margin: 6})->
         gallery = $(this)
+        gallery.css("text-align", "center")
 
         img_gallery = for img_id, img_info of img_info_items
             gallery.append("<img id='#{ img_id }' src='#{ img_info.path }' />")
