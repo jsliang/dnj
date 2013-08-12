@@ -37,8 +37,23 @@ $.fn.extend
         gallery = $(this)
         gallery.css("text-align", "center")
 
+        get_large_img_path = (img_path)->
+            pos_last_slash = img_path.lastIndexOf("/")
+            img_file_name = img_path.substr(pos_last_slash, img_path.length - pos_last_slash)
+
+            pos_2nd_last_slash = img_path.substr(0, pos_last_slash).lastIndexOf("/")
+            img_path_prefix = img_path.substr(0, pos_2nd_last_slash)
+
+            if $(window).width() > $(window).height()
+                screen_dimension_max = $(window).width() - 5
+            else
+                screen_dimension_max = $(window).height() - 5
+
+            return img_path_prefix.concat("/s#{ screen_dimension_max }").concat(img_file_name)
+
         img_gallery = for img_id, img_info of img_info_items
-            gallery.append("<img id='#{ img_id }' src='#{ img_info.path }' />")
+            full_image_path = get_large_img_path(img_info.path)
+            gallery.append("<a href='#{ full_image_path }' target='_blank'><img id='#{ img_id }' src='#{ img_info.path }' /></a>")
 
             $("#" + img_id).data("orig_width", img_info.width)
             $("#" + img_id).data("orig_height", img_info.height)
@@ -49,8 +64,10 @@ $.fn.extend
         gallery._relayout(img_info_items, option)
 
         $(window).resize ()->
-            gallery.children("img").each ()->
+            gallery.find("img").each ()->
                 $(this)._setHeight(option.min_height)
+                full_image_path = get_large_img_path($(this).attr("src"))
+                $(this).parent().attr("href", "#{ full_image_path }")
             gallery._relayout(img_info_items, option)
 
     _setHeight: (height)->
@@ -72,12 +89,14 @@ $.fn.extend
 
         if new_width < orig_width and new_height < orig_height
             $(this).width(new_width).height(new_height)
+        else
+            $(this).width(orig_width).height(orig_height)
 
     _relayout: (img_info_items, option)->
         max_total_width = $(this).innerWidth() - 10
 
         rows = {}
-        $(this).children("img").each ()->
+        $(this).find("img").each ()->
             top = $(this).position().top
             if rows[top]?
                 rows[top].push $(this).attr("id")
