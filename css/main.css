@@ -56,9 +56,10 @@ textarea {
 }
 
 
-/* ===== Initializr Styles ==================================================
-   Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
-   ========================================================================== */
+/* ===== Initializr Styles =========================================================
+   Original Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
+   Modified by: jsliang
+   ================================================================================= */
 
 body {
     font: 16px/26px Helvetica, Helvetica Neue, Arial;
@@ -70,20 +71,16 @@ body {
 }
 
 /* ===================
-    ALL: Orange Theme
+    ALL: Gray Theme
    =================== */
 
-.header-container {
-    border-bottom: 20px solid #e44d26;
-}
-
 .main aside {
-    border-top: 20px solid #e44d26;
+    border-top: 20px solid #575757;
 }
 
 .header-container,
 .main aside {
-    background: #f16529;
+    background: black;
 }
 
 .title {
@@ -125,7 +122,7 @@ nav a {
     font-weight: bold;
 
     color: white;
-    background: #e44d26;
+    background: #575757;
 }
 
 nav a:hover,
@@ -151,7 +148,7 @@ nav a:hover {
 
 .main article a,
 .main article a:visited {
-    color: #E44D26;
+    color: #575757;
     text-decoration: none;
 }
 
@@ -185,7 +182,7 @@ nav a:hover {
    ========================================================================== */
 
 #scroll-top-bar {
-    background: #f16529;
+    background: black;
 }
 
 #scroll-top-bar:hover {
