@@ -466,7 +466,7 @@
         var current_top;
         current_top = $(window).scrollTop();
         if (current_top > 1) {
-          $(window).scrollTop(Math.round(current_top / 2));
+          $(window).scrollTop(Math.round(current_top * 0.66));
           return setTimeout(slowly_scroll_top, 50);
         } else {
           return $(window).scrollTop(0);

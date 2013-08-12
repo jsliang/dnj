@@ -14,7 +14,7 @@ $.fn.extend
             .click slowly_scroll_top = ()->
                 current_top = $(window).scrollTop()
                 if current_top > 1
-                    $(window).scrollTop( Math.round(current_top / 2) )
+                    $(window).scrollTop( Math.round(current_top * 0.66) )
                     setTimeout(slowly_scroll_top, 50)
                 else
                     $(window).scrollTop(0)
