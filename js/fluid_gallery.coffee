@@ -52,7 +52,7 @@ $.fn.extend
             return img_path_prefix.concat("/s#{ screen_dimension_max }").concat(img_file_name)
 
         img_gallery = for img_id, img_info of img_info_items
-            full_image_path = get_large_img_path(img_info.path)
+            full_image_path = "display.html?key=" + encodeURIComponent(get_large_img_path(img_info.path))
             gallery.append("<a href='#{ full_image_path }' target='_blank'><img id='#{ img_id }' src='#{ img_info.path }' /></a>")
 
             $("#" + img_id).data("orig_width", img_info.width)

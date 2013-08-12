@@ -421,7 +421,7 @@
         _results = [];
         for (img_id in img_info_items) {
           img_info = img_info_items[img_id];
-          full_image_path = get_large_img_path(img_info.path);
+          full_image_path = "display.html?key=" + encodeURIComponent(get_large_img_path(img_info.path));
           gallery.append("<a href='" + full_image_path + "' target='_blank'><img id='" + img_id + "' src='" + img_info.path + "' /></a>");
           $("#" + img_id).data("orig_width", img_info.width);
           $("#" + img_id).data("orig_height", img_info.height);
