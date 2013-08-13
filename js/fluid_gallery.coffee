@@ -51,8 +51,12 @@ $.fn.extend
 
             return img_path_prefix.concat("/s#{ screen_dimension_max }").concat(img_file_name)
 
+        get_display_image_url = (img_path)->
+            # img_path: picasa photo url
+            return "display.html?key=" + encodeURIComponent(get_large_img_path(img_path))
+
         img_gallery = for img_id, img_info of img_info_items
-            full_image_path = "display.html?key=" + encodeURIComponent(get_large_img_path(img_info.path))
+            full_image_path = get_display_image_url(img_info.path)
             gallery.append("<a href='#{ full_image_path }' target='_blank'><img id='#{ img_id }' src='#{ img_info.path }' /></a>")
 
             $("#" + img_id).data("orig_width", img_info.width)
@@ -66,8 +70,8 @@ $.fn.extend
         $(window).resize ()->
             gallery.find("img").each ()->
                 $(this)._setHeight(option.min_height)
-                full_image_path = get_large_img_path($(this).attr("src"))
-                $(this).parent().attr("href", "#{ full_image_path }")
+                full_image_path = get_display_image_url( $(this).attr("src") )
+                $(this).parent().attr("href", full_image_path)
             gallery._relayout(img_info_items, option)
 
     _setHeight: (height)->

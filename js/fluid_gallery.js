@@ -394,7 +394,7 @@
       return $("body").append(scrolltop_bar);
     },
     gallery: function(img_info_items, option) {
-      var full_image_path, gallery, get_large_img_path, img_gallery, img_id, img_info;
+      var full_image_path, gallery, get_display_image_url, get_large_img_path, img_gallery, img_id, img_info;
       if (option == null) {
         option = {
           min_height: 200,
@@ -416,12 +416,15 @@
         }
         return img_path_prefix.concat("/s" + screen_dimension_max).concat(img_file_name);
       };
+      get_display_image_url = function(img_path) {
+        return "display.html?key=" + encodeURIComponent(get_large_img_path(img_path));
+      };
       img_gallery = (function() {
         var _results;
         _results = [];
         for (img_id in img_info_items) {
           img_info = img_info_items[img_id];
-          full_image_path = "display.html?key=" + encodeURIComponent(get_large_img_path(img_info.path));
+          full_image_path = get_display_image_url(img_info.path);
           gallery.append("<a href='" + full_image_path + "' target='_blank'><img id='" + img_id + "' src='" + img_info.path + "' /></a>");
           $("#" + img_id).data("orig_width", img_info.width);
           $("#" + img_id).data("orig_height", img_info.height);
@@ -434,8 +437,8 @@
       return $(window).resize(function() {
         gallery.find("img").each(function() {
           $(this)._setHeight(option.min_height);
-          full_image_path = get_large_img_path($(this).attr("src"));
-          return $(this).parent().attr("href", "" + full_image_path);
+          full_image_path = get_display_image_url($(this).attr("src"));
+          return $(this).parent().attr("href", full_image_path);
         });
         return gallery._relayout(img_info_items, option);
       });
