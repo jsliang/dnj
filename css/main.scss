@@ -1,14 +1,29 @@
+/* light background theme */
+$color_front:   #000000;
+$color_back:    #ffffff;
+
+/* dark background theme */
+/*
+$color_front:   #ffffff;
+$color_back:    #000000;
+*/
+
+$color_middle:  $color_front * 0.75 + $color_back * 0.25;
+$color_shadow:  $color_front * 0.8 + $color_back * 0.2;
+$color_text:    $color_middle;
+
 /* ==========================================================================
    HTML5 Boilerplate styles - h5bp.com (generated via initializr.com)
    ========================================================================== */
 
 html, button, input, select, textarea {
-  color: #222;
+  color: $color_text;
 }
 
 body {
   font-size: 1em;
   line-height: 1.4;
+  background-color: $color_back;
 }
 
 ::-moz-selection, ::selection {
@@ -41,7 +56,7 @@ textarea {
 
 .chromeframe {
   background: #ccc;
-  color: #000;
+  color: $color_front;
   margin: 0.2em 0;
   padding: 0.2em 0;
 }
@@ -65,21 +80,21 @@ body {
    =================== */
 
 .main aside {
-  border-top: 20px solid #575757;
+  border-top: 20px solid $color_middle;
 }
 
 .header-container, .main aside {
-  background: black;
+  background: $color_front;
 }
 
 .title {
-  color: white;
+  color: $color_back;
 }
 
 .footer-container {
   background-color: transparent;
   border-top: 0;
-  color: black;
+  color: $color_front;
 }
 
 footer a {
@@ -104,8 +119,8 @@ nav {
     padding: 0;
   }
   a {
-    background: #575757;
-    color: white;
+    background: $color_middle;
+    color: $color_back;
     display: block;
     font-weight: bold;
     margin-bottom: 10px;
@@ -113,7 +128,7 @@ nav {
     text-align: center;
     text-decoration: none;
     &:hover, &:visited {
-      color: white;
+      color: $color_back;
     }
     &:hover {
       text-decoration: underline;
@@ -132,10 +147,10 @@ nav {
       font-size: 2em;
     }
     a {
-      color: #575757;
+      color: $color_middle;
       text-decoration: none;
       &:visited {
-        color: #575757;
+        color: $color_middle;
         text-decoration: none;
       }
       &:hover {
@@ -144,13 +159,13 @@ nav {
     }
   }
   aside {
-    color: white;
+    color: $color_back;
     padding: 0px 5% 10px;
   }
 }
 
 .footer-container footer {
-  color: black;
+  color: $color_front;
   padding: 20px 0;
   text-align: right;
 }
@@ -169,12 +184,12 @@ nav {
    ========================================================================== */
 
 #scroll-top-bar {
-  background: black;
+  background: $color_front;
   &:hover {
     cursor: pointer;
   }
   .scroll-top-bar-container {
-    color: white;
+    color: $color_back;
     font-size: 3em;
     padding: 0;
     text-align: center;
@@ -232,9 +247,9 @@ nav {
       WIDE: CSS3 Effects
      ==================== */
   .header-container, .main aside {
-    -webkit-box-shadow: 0 5px 10px #aaa;
-    -moz-box-shadow: 0 5px 10px #aaa;
-    box-shadow: 0 5px 10px #aaa;
+    -webkit-box-shadow: 0 5px 10px $color_shadow;
+    -moz-box-shadow: 0 5px 10px $color_shadow;
+    box-shadow: 0 5px 10px $color_shadow;
   }
   /* ============
       WIDE: Menu
