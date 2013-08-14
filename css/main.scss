@@ -1,16 +1,16 @@
 /* light background theme */
 $color_front:   #000000;
 $color_back:    #ffffff;
+$color_shadow:  $color_front * 0.2 + $color_back * 0.8;
+$color_middle:  $color_front * 0.5 + $color_back * 0.5;
 
 /* dark background theme */
-/*
-$color_front:   #ffffff;
-$color_back:    #000000;
-*/
+// $color_front:   #ffffff;
+// $color_back:    #000000;
+// $color_shadow:  $color_front;
+// $color_middle:  $color_front * 0.6 + $color_back * 0.4;
 
-$color_middle:  $color_front * 0.75 + $color_back * 0.25;
-$color_shadow:  $color_front * 0.8 + $color_back * 0.2;
-$color_text:    $color_middle;
+$color_text:    $color_front * 0.75 + $color_back * 0.25;
 
 /* ==========================================================================
    HTML5 Boilerplate styles - h5bp.com (generated via initializr.com)
@@ -78,17 +78,15 @@ body {
 /* ===================
     ALL: Gray Theme
    =================== */
+header {
+  h1 {
+    color: $color_front;
+  }
+}
 
 .main aside {
-  border-top: 20px solid $color_middle;
-}
-
-.header-container, .main aside {
   background: $color_front;
-}
-
-.title {
-  color: $color_back;
+  border-top: 20px solid $color_middle;
 }
 
 .footer-container {
@@ -98,10 +96,10 @@ body {
 }
 
 footer a {
-  color: #666666;
+  color: $color_middle;
   text-decoration: underline;
   &:visited {
-    color: #666666;
+    color: $color_middle;
     text-decoration: underline;
   }
   &:hover {
@@ -112,26 +110,42 @@ footer a {
 /* ==============
     MOBILE: Menu
    ============== */
-
+$a_count: 4;
 nav {
   ul {
-    margin: 0;
+    margin: 1.5em 0;
     padding: 0;
+    li {
+      display: inline;
+    }
   }
   a {
-    background: $color_middle;
-    color: $color_back;
-    display: block;
-    font-weight: bold;
-    margin-bottom: 10px;
-    padding: 15px 0;
+    border-bottom: 1px dotted $color_middle;
+    border-top: 1px dotted $color_middle;
+    color: $color_middle;
+    float: left;
+    font-size: 0.9em;
+    margin: 0;
+    padding: 0.5em 0;
     text-align: center;
     text-decoration: none;
-    &:hover, &:visited {
-      color: $color_back;
+    width: 99%/$a_count;
+
+    &:hover, .mobile_nav_a_hover {
+      background-color: $color_back;
+      border-bottom: 1px dashed $color_front;
+      border-top: 1px dashed $color_front;
+      color: $color_front;
+      text-decoration: none;
+      text-shadow: 1px 1px 2px $color_shadow;
     }
-    &:hover {
-      text-decoration: underline;
+
+    &.active {
+      border-bottom: 1px solid $color_front;
+      border-top: 1px solid $color_front;
+      color: $color_front;
+      cursor: default;
+      text-shadow: 1px 1px 2px $color_shadow;
     }
   }
 }
@@ -141,18 +155,15 @@ nav {
    ============== */
 
 .main {
-  padding: 30px 0;
+  padding: 1em 0;
   article {
     h1 {
+      color: $color_front;
       font-size: 2em;
     }
     a {
       color: $color_middle;
       text-decoration: none;
-      &:visited {
-        color: $color_middle;
-        text-decoration: none;
-      }
       &:hover {
         text-decoration: underline;
       }
@@ -214,24 +225,32 @@ nav {
   /* ====================
       INTERMEDIATE: Menu
      ==================== */
+  $a_horizontal_margin: 2%;
+  $a_width: (100% - $a_horizontal_margin * 2 * ($a_count - 1))/$a_count;
   nav {
+    ul{
+      li {
+        display: inline;
+        &:first-child a {
+          margin-left: 0;
+        }
+        &:last-child a {
+          margin-right: 0;
+        }
+      }
+    }
     a {
-      float: left;
-      margin-bottom: 0;
-      margin: 0 1.7%;
-      padding: 25px 2%;
-      width: 27%;
-    }
-    li {
-      &:first-child a {
-        margin-left: 0;
+      border-top: 1px dotted transparent;
+      font-size: 15px;
+      letter-spacing: 2px;
+      margin: 0 $a_horizontal_margin;
+      padding: 0.5em 0;
+      width: $a_width;
+
+      &:hover,
+      &.active {
+        border-top: 1px solid transparent;
       }
-      &:last-child a {
-        margin-right: 0;
-      }
-    }
-    ul li {
-      display: inline;
     }
   }
   /* ========================
@@ -246,7 +265,7 @@ nav {
   /* ====================
       WIDE: CSS3 Effects
      ==================== */
-  .header-container, .main aside {
+  .main aside {
     -webkit-box-shadow: 0 5px 10px $color_shadow;
     -moz-box-shadow: 0 5px 10px $color_shadow;
     box-shadow: 0 5px 10px $color_shadow;
@@ -254,12 +273,7 @@ nav {
   /* ============
       WIDE: Menu
      ============ */
-  .title {
-    float: left;
-  }
   nav {
-    float: right;
-    width: 38%;
   }
   /* ============
       WIDE: Main
