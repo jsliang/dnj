@@ -45,7 +45,7 @@ $.fn.extend
                 my_spin_icon = refresh_spin_icon_template.clone()
                 my_spin_icon
                     .attr("id", null)
-                    .addClass("_lazyLoad_spin_icon")
+                    .addClass("_image_not_loaded")
                     .attr("my_img_id", img.parent().attr("id"))
                     .css("position", "relative")
                     .css("top", (img.parent().height() - my_spin_icon.height()) / 2)
@@ -62,7 +62,7 @@ $.fn.extend
                 img.attr("src", img.attr("data-src"))
 
         $(window).scroll ()->
-            gallery.find("._lazyLoad_spin_icon").each ()->
+            gallery.find("._image_not_loaded").each ()->
                 my_spin_icon = $(this)
                 current_scrolltop = $(window).scrollTop()
                 current_scrollbottom = $(window).scrollTop() + $(window).height()
@@ -70,6 +70,7 @@ $.fn.extend
                 if img_top > current_scrolltop and img_top < current_scrollbottom
                     img = $("#" + my_spin_icon.attr("my_img_id")).find("img")
                     img.attr("src", img.attr("data-src")).show()
+                    my_spin_icon.removeClass("_image_not_loaded")
 
     gallery: (img_info_items, option = {min_height: 200, margin: 6})->
         gallery = $(this)

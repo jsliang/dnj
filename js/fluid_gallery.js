@@ -406,7 +406,7 @@
         img = $(this);
         if (img.position().top > $(window).height()) {
           my_spin_icon = refresh_spin_icon_template.clone();
-          my_spin_icon.attr("id", null).addClass("_lazyLoad_spin_icon").attr("my_img_id", img.parent().attr("id")).css("position", "relative").css("top", (img.parent().height() - my_spin_icon.height()) / 2);
+          my_spin_icon.attr("id", null).addClass("_image_not_loaded").attr("my_img_id", img.parent().attr("id")).css("position", "relative").css("top", (img.parent().height() - my_spin_icon.height()) / 2);
           $(window).resize(function() {
             return my_spin_icon.css("top", (img.parent().height() - my_spin_icon.height()) / 2);
           });
@@ -417,7 +417,7 @@
         }
       });
       return $(window).scroll(function() {
-        return gallery.find("._lazyLoad_spin_icon").each(function() {
+        return gallery.find("._image_not_loaded").each(function() {
           var current_scrollbottom, current_scrolltop, img, img_top, my_spin_icon;
 
           my_spin_icon = $(this);
@@ -426,7 +426,8 @@
           img_top = my_spin_icon.parent().position().top;
           if (img_top > current_scrolltop && img_top < current_scrollbottom) {
             img = $("#" + my_spin_icon.attr("my_img_id")).find("img");
-            return img.attr("src", img.attr("data-src")).show();
+            img.attr("src", img.attr("data-src")).show();
+            return my_spin_icon.removeClass("_image_not_loaded");
           }
         });
       });

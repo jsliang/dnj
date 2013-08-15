@@ -18,7 +18,6 @@ $color_text:    $color_front * 0.75 + $color_back * 0.25;
 
 #gallery {
   a {
-    background-color: transparentize($color_middle, 0.5);
     display: block;
     float: left;
     #refresh_spin_icon_template, ._lazyLoad_spin_icon {
