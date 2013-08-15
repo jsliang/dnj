@@ -33,6 +33,44 @@ $.fn.extend
 
         $("body").append(scrolltop_bar)
 
+    lazyLoad: (template_id)->
+        refresh_spin_icon_template = $(template_id).clone()
+        $(template_id).hide()
+
+        gallery = $(this)
+        gallery.find("img").each ()->
+            img = $(this)
+
+            if img.position().top > $(window).height()
+                my_spin_icon = refresh_spin_icon_template.clone()
+                my_spin_icon
+                    .attr("id", null)
+                    .addClass("_lazyLoad_spin_icon")
+                    .attr("my_img_id", img.parent().attr("id"))
+                    .css("position", "relative")
+                    .css("top", (img.parent().height() - my_spin_icon.height()) / 2)
+
+                $(window).resize ()->
+                    my_spin_icon.css("top", (img.parent().height() - my_spin_icon.height()) / 2)
+
+                img.before(my_spin_icon)
+                img
+                    .css("position", "relative")
+                    .css("top", "-#{ my_spin_icon.height() }px")
+                    .hide() # hide image first
+            else
+                img.attr("src", img.attr("data-src"))
+
+        $(window).scroll ()->
+            gallery.find("._lazyLoad_spin_icon").each ()->
+                my_spin_icon = $(this)
+                current_scrolltop = $(window).scrollTop()
+                current_scrollbottom = $(window).scrollTop() + $(window).height()
+                img_top = my_spin_icon.parent().position().top
+                if img_top > current_scrolltop and img_top < current_scrollbottom
+                    img = $("#" + my_spin_icon.attr("my_img_id")).find("img")
+                    img.attr("src", img.attr("data-src")).show()
+
     gallery: (img_info_items, option = {min_height: 200, margin: 6})->
         gallery = $(this)
         gallery.css("text-align", "center")
@@ -57,13 +95,11 @@ $.fn.extend
 
         img_gallery = for img_id, img_info of img_info_items
             full_image_path = get_display_image_url(img_info.path)
-            gallery.append("<a id='#{ img_id }' href='#{ full_image_path }' target='_blank'><img src='#{ img_info.path }' /></a>")
+            gallery.append("<a id='#{ img_id }' href='#{ full_image_path }' target='_blank'><img data-src='#{ img_info.path }' /></a>")
 
             $("#" + img_id)
                 .data("orig_width", img_info.width)
                 .data("orig_height", img_info.height)
-
-            $("#" + img_id).find("img")
                 .css("margin", option.margin / 2)
 
             $("#" + img_id)._setHeight(option.min_height)
@@ -72,14 +108,16 @@ $.fn.extend
 
         $(window).resize ()->
             gallery.find("a").each ()->
-                full_image_path = get_display_image_url( $(this).find("img").attr("src") )
-                $(this)
-                    .attr("href", full_image_path)
-                    ._setHeight(option.min_height)
+                $(this)._setHeight(option.min_height)
+                full_image_path = get_display_image_url( $(this).find("img").attr("data-src") )
+                $(this).find("img").attr("href", full_image_path)
             gallery._relayout(img_info_items, option)
 
     _setThumbSize: (width, height)->
-        $(this).width(width).height(height)
+        $(this)
+            .data("current_width", width)
+            .data("current_height", height)
+            .width(width).height(height)
         $(this).find("img").width(width).height(height)
 
     _setHeight: (height)->
@@ -94,8 +132,8 @@ $.fn.extend
     _resizeImage: (ratio)->
         orig_width = $(this).data("orig_width")
         orig_height = $(this).data("orig_height")
-        current_width = $(this).find("img").width()
-        current_height = $(this).find("img").height()
+        current_width = $(this).data("current_width")
+        current_height = $(this).data("current_height")
         new_width = current_width * ratio
         new_height = current_height * ratio
 
@@ -120,7 +158,7 @@ $.fn.extend
             current_total_width = 0
             for img_id in img_id_list
                 do (img_id)->
-                    current_total_width += $("#" + img_id).find("img").width()
+                    current_total_width += $("#" + img_id).data("current_width")
             # caculate resize ratio
             resize_ratio = (max_total_width - option.margin * (img_id_list.length - 1)) / current_total_width
 
@@ -131,4 +169,6 @@ $.fn.extend
 
 $(document).ready ()->
     $("#gallery").gallery(img_info_items)
-    $("#scroll-top-bar").fixedScrollTopBar()
+    $("#scroll-top-bar")
+        .fixedScrollTopBar()
+        .lazyLoad("#refresh_spin_icon_template")

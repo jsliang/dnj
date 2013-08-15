@@ -394,6 +394,43 @@
       });
       return $("body").append(scrolltop_bar);
     },
+    lazyLoad: function(template_id) {
+      var gallery, refresh_spin_icon_template;
+
+      refresh_spin_icon_template = $(template_id).clone();
+      $(template_id).hide();
+      gallery = $(this);
+      gallery.find("img").each(function() {
+        var img, my_spin_icon;
+
+        img = $(this);
+        if (img.position().top > $(window).height()) {
+          my_spin_icon = refresh_spin_icon_template.clone();
+          my_spin_icon.attr("id", null).addClass("_lazyLoad_spin_icon").attr("my_img_id", img.parent().attr("id")).css("position", "relative").css("top", (img.parent().height() - my_spin_icon.height()) / 2);
+          $(window).resize(function() {
+            return my_spin_icon.css("top", (img.parent().height() - my_spin_icon.height()) / 2);
+          });
+          img.before(my_spin_icon);
+          return img.css("position", "relative").css("top", "-" + (my_spin_icon.height()) + "px").hide();
+        } else {
+          return img.attr("src", img.attr("data-src"));
+        }
+      });
+      return $(window).scroll(function() {
+        return gallery.find("._lazyLoad_spin_icon").each(function() {
+          var current_scrollbottom, current_scrolltop, img, img_top, my_spin_icon;
+
+          my_spin_icon = $(this);
+          current_scrolltop = $(window).scrollTop();
+          current_scrollbottom = $(window).scrollTop() + $(window).height();
+          img_top = my_spin_icon.parent().position().top;
+          if (img_top > current_scrolltop && img_top < current_scrollbottom) {
+            img = $("#" + my_spin_icon.attr("my_img_id")).find("img");
+            return img.attr("src", img.attr("data-src")).show();
+          }
+        });
+      });
+    },
     gallery: function(img_info_items, option) {
       var full_image_path, gallery, get_display_image_url, get_large_img_path, img_gallery, img_id, img_info;
 
@@ -429,9 +466,8 @@
         for (img_id in img_info_items) {
           img_info = img_info_items[img_id];
           full_image_path = get_display_image_url(img_info.path);
-          gallery.append("<a id='" + img_id + "' href='" + full_image_path + "' target='_blank'><img src='" + img_info.path + "' /></a>");
-          $("#" + img_id).data("orig_width", img_info.width).data("orig_height", img_info.height);
-          $("#" + img_id).find("img").css("margin", option.margin / 2);
+          gallery.append("<a id='" + img_id + "' href='" + full_image_path + "' target='_blank'><img data-src='" + img_info.path + "' /></a>");
+          $("#" + img_id).data("orig_width", img_info.width).data("orig_height", img_info.height).css("margin", option.margin / 2);
           _results.push($("#" + img_id)._setHeight(option.min_height));
         }
         return _results;
@@ -439,14 +475,15 @@
       gallery._relayout(img_info_items, option);
       return $(window).resize(function() {
         gallery.find("a").each(function() {
-          full_image_path = get_display_image_url($(this).find("img").attr("src"));
-          return $(this).attr("href", full_image_path)._setHeight(option.min_height);
+          $(this)._setHeight(option.min_height);
+          full_image_path = get_display_image_url($(this).find("img").attr("data-src"));
+          return $(this).find("img").attr("href", full_image_path);
         });
         return gallery._relayout(img_info_items, option);
       });
     },
     _setThumbSize: function(width, height) {
-      $(this).width(width).height(height);
+      $(this).data("current_width", width).data("current_height", height).width(width).height(height);
       return $(this).find("img").width(width).height(height);
     },
     _setHeight: function(height) {
@@ -464,8 +501,8 @@
 
       orig_width = $(this).data("orig_width");
       orig_height = $(this).data("orig_height");
-      current_width = $(this).find("img").width();
-      current_height = $(this).find("img").height();
+      current_width = $(this).data("current_width");
+      current_height = $(this).data("current_height");
       new_width = current_width * ratio;
       new_height = current_height * ratio;
       if (new_width < orig_width && new_height < orig_height) {
@@ -497,7 +534,7 @@
           img_id_list = rows[row_top];
           current_total_width = 0;
           _fn = function(img_id) {
-            return current_total_width += $("#" + img_id).find("img").width();
+            return current_total_width += $("#" + img_id).data("current_width");
           };
           for (_i = 0, _len = img_id_list.length; _i < _len; _i++) {
             img_id = img_id_list[_i];
@@ -524,7 +561,7 @@
 
   $(document).ready(function() {
     $("#gallery").gallery(img_info_items);
-    return $("#scroll-top-bar").fixedScrollTopBar();
+    return $("#scroll-top-bar").fixedScrollTopBar().lazyLoad("#refresh_spin_icon_template");
   });
 
 }).call(this);

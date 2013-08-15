@@ -16,6 +16,17 @@ $color_middle:  $color_front * 0.5 + $color_back * 0.5;
 
 $color_text:    $color_front * 0.75 + $color_back * 0.25;
 
+#gallery {
+  a {
+    background-color: transparentize($color_middle, 0.5);
+    display: block;
+    float: left;
+    #refresh_spin_icon_template, ._lazyLoad_spin_icon {
+      color: $color_front;
+    }
+  }
+}
+
 /* ==========================================================================
    HTML5 Boilerplate styles - h5bp.com (generated via initializr.com)
    ========================================================================== */
