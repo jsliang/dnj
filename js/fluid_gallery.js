@@ -475,6 +475,7 @@
       gallery._relayout(img_info_items, option);
       return $(window).resize(function() {
         gallery.find("a").each(function() {
+          $(this).css("margin-left", option.margin / 2);
           $(this)._setHeight(option.min_height);
           full_image_path = get_display_image_url($(this).find("img").attr("data-src"));
           return $(this).find("img").attr("href", full_image_path);
@@ -512,7 +513,7 @@
       }
     },
     _relayout: function(img_info_items, option) {
-      var current_total_width, img_id, img_id_list, max_total_width, resize_ratio, row_top, rows, stretch_row;
+      var current_total_width, first_pic, img_id, img_id_list, last_pic, max_total_width, resize_ratio, row_top, rows, stretch_row;
 
       max_total_width = $(this).innerWidth() - 10;
       rows = {};
@@ -527,7 +528,7 @@
         }
       });
       return stretch_row = (function() {
-        var _fn, _i, _len, _results;
+        var _fn, _fn1, _i, _j, _len, _len1, _results;
 
         _results = [];
         for (row_top in rows) {
@@ -541,18 +542,17 @@
             _fn(img_id);
           }
           resize_ratio = (max_total_width - option.margin * (img_id_list.length - 1)) / current_total_width;
-          _results.push((function() {
-            var _j, _len1, _results1;
-
-            _results1 = [];
-            for (_j = 0, _len1 = img_id_list.length; _j < _len1; _j++) {
-              img_id = img_id_list[_j];
-              _results1.push((function(img_id) {
-                return $("#" + img_id)._resizeImage(resize_ratio);
-              })(img_id));
-            }
-            return _results1;
-          })());
+          _fn1 = function(img_id) {
+            return $("#" + img_id)._resizeImage(resize_ratio);
+          };
+          for (_j = 0, _len1 = img_id_list.length; _j < _len1; _j++) {
+            img_id = img_id_list[_j];
+            _fn1(img_id);
+          }
+          first_pic = $("#" + img_id_list[0]);
+          last_pic = $("#" + img_id_list[img_id_list.length - 1]);
+          current_total_width = last_pic.width() + last_pic.position().left - first_pic.position().left;
+          _results.push($("#" + img_id_list[0]).css("margin-left", (max_total_width - current_total_width) / 2));
         }
         return _results;
       })();

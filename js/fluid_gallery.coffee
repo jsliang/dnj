@@ -108,6 +108,7 @@ $.fn.extend
 
         $(window).resize ()->
             gallery.find("a").each ()->
+                $(this).css("margin-left", option.margin / 2)
                 $(this)._setHeight(option.min_height)
                 full_image_path = get_display_image_url( $(this).find("img").attr("data-src") )
                 $(this).find("img").attr("href", full_image_path)
@@ -166,6 +167,12 @@ $.fn.extend
             for img_id in img_id_list
                 do (img_id)->
                     $("#" + img_id)._resizeImage(resize_ratio)
+
+            # center the row (if some image is not large enough, there'll be remaining space)
+            first_pic = $("#" + img_id_list[0])
+            last_pic = $("#" + img_id_list[img_id_list.length - 1])
+            current_total_width = last_pic.width() + last_pic.position().left - first_pic.position().left
+            $("#" + img_id_list[0]).css("margin-left", (max_total_width - current_total_width)/2)
 
 $(document).ready ()->
     $("#gallery").gallery(img_info_items)
