@@ -25,9 +25,10 @@ html, button, input, select, textarea {
 }
 
 body {
+  background-color: $color_back;
+  font-family: Helvetica, Helvetica Neue, Arial;
   font-size: 1em;
   line-height: 1.4;
-  background-color: $color_back;
 }
 
 ::-moz-selection, ::selection {
@@ -63,15 +64,6 @@ textarea {
   color: $color_front;
   margin: 0.2em 0;
   padding: 0.2em 0;
-}
-
-/* ===== Initializr Styles =========================================================
-   Original Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
-   Modified by: jsliang
-   ================================================================================= */
-
-body {
-  font: 16px / 26px Helvetica, Helvetica Neue, Arial;
 }
 
 .wrapper {

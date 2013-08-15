@@ -359,6 +359,7 @@
   $.fn.extend({
     fixedScrollTopBar: function(option) {
       var scrolltop_bar, slowly_scroll_top;
+
       if (option == null) {
         option = {
           opacity: 0.7
@@ -368,6 +369,7 @@
       $(this).css("opacity", 0);
       scrolltop_bar.css("bottom", 0).css("position", "fixed").css("width", "100%").css("opacity", 0).click(slowly_scroll_top = function() {
         var current_top;
+
         current_top = $(window).scrollTop();
         if (current_top > 1) {
           $(window).scrollTop(Math.round(current_top * 0.66));
@@ -394,6 +396,7 @@
     },
     gallery: function(img_info_items, option) {
       var full_image_path, gallery, get_display_image_url, get_large_img_path, img_gallery, img_id, img_info;
+
       if (option == null) {
         option = {
           min_height: 200,
@@ -404,6 +407,7 @@
       gallery.css("text-align", "center");
       get_large_img_path = function(img_path) {
         var img_file_name, img_path_prefix, pos_2nd_last_slash, pos_last_slash, screen_dimension_max;
+
         pos_last_slash = img_path.lastIndexOf("/");
         img_file_name = img_path.substr(pos_last_slash, img_path.length - pos_last_slash);
         pos_2nd_last_slash = img_path.substr(0, pos_last_slash).lastIndexOf("/");
@@ -420,57 +424,64 @@
       };
       img_gallery = (function() {
         var _results;
+
         _results = [];
         for (img_id in img_info_items) {
           img_info = img_info_items[img_id];
           full_image_path = get_display_image_url(img_info.path);
-          gallery.append("<a href='" + full_image_path + "' target='_blank'><img id='" + img_id + "' src='" + img_info.path + "' /></a>");
-          $("#" + img_id).data("orig_width", img_info.width);
-          $("#" + img_id).data("orig_height", img_info.height);
-          $("#" + img_id).css("margin", option.margin / 2);
+          gallery.append("<a id='" + img_id + "' href='" + full_image_path + "' target='_blank'><img src='" + img_info.path + "' /></a>");
+          $("#" + img_id).data("orig_width", img_info.width).data("orig_height", img_info.height);
+          $("#" + img_id).find("img").css("margin", option.margin / 2);
           _results.push($("#" + img_id)._setHeight(option.min_height));
         }
         return _results;
       })();
       gallery._relayout(img_info_items, option);
       return $(window).resize(function() {
-        gallery.find("img").each(function() {
-          $(this)._setHeight(option.min_height);
-          full_image_path = get_display_image_url($(this).attr("src"));
-          return $(this).parent().attr("href", full_image_path);
+        gallery.find("a").each(function() {
+          full_image_path = get_display_image_url($(this).find("img").attr("src"));
+          return $(this).attr("href", full_image_path)._setHeight(option.min_height);
         });
         return gallery._relayout(img_info_items, option);
       });
     },
+    _setThumbSize: function(width, height) {
+      $(this).width(width).height(height);
+      return $(this).find("img").width(width).height(height);
+    },
     _setHeight: function(height) {
       var orig_height, orig_width, width;
+
       orig_width = $(this).data("orig_width");
       orig_height = $(this).data("orig_height");
       width = height / orig_height * orig_width;
       if (width < orig_width && height < orig_height) {
-        return $(this).width(width).height(height);
+        return $(this)._setThumbSize(width, height);
       }
     },
     _resizeImage: function(ratio) {
       var current_height, current_width, new_height, new_width, orig_height, orig_width;
+
       orig_width = $(this).data("orig_width");
       orig_height = $(this).data("orig_height");
-      current_width = $(this).width();
-      current_height = $(this).height();
+      current_width = $(this).find("img").width();
+      current_height = $(this).find("img").height();
       new_width = current_width * ratio;
       new_height = current_height * ratio;
       if (new_width < orig_width && new_height < orig_height) {
-        return $(this).width(new_width).height(new_height);
+        return $(this)._setThumbSize(new_width, new_height);
       } else {
-        return $(this).width(orig_width).height(orig_height);
+        return $(this)._setThumbSize(orig_width, orig_height);
       }
     },
     _relayout: function(img_info_items, option) {
       var current_total_width, img_id, img_id_list, max_total_width, resize_ratio, row_top, rows, stretch_row;
+
       max_total_width = $(this).innerWidth() - 10;
       rows = {};
-      $(this).find("img").each(function() {
+      $(this).find("a").each(function() {
         var top;
+
         top = $(this).position().top;
         if (rows[top] != null) {
           return rows[top].push($(this).attr("id"));
@@ -480,12 +491,13 @@
       });
       return stretch_row = (function() {
         var _fn, _i, _len, _results;
+
         _results = [];
         for (row_top in rows) {
           img_id_list = rows[row_top];
           current_total_width = 0;
           _fn = function(img_id) {
-            return current_total_width += $("#" + img_id).width();
+            return current_total_width += $("#" + img_id).find("img").width();
           };
           for (_i = 0, _len = img_id_list.length; _i < _len; _i++) {
             img_id = img_id_list[_i];
@@ -494,6 +506,7 @@
           resize_ratio = (max_total_width - option.margin * (img_id_list.length - 1)) / current_total_width;
           _results.push((function() {
             var _j, _len1, _results1;
+
             _results1 = [];
             for (_j = 0, _len1 = img_id_list.length; _j < _len1; _j++) {
               img_id = img_id_list[_j];

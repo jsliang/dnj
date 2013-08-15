@@ -57,22 +57,30 @@ $.fn.extend
 
         img_gallery = for img_id, img_info of img_info_items
             full_image_path = get_display_image_url(img_info.path)
-            gallery.append("<a href='#{ full_image_path }' target='_blank'><img id='#{ img_id }' src='#{ img_info.path }' /></a>")
+            gallery.append("<a id='#{ img_id }' href='#{ full_image_path }' target='_blank'><img src='#{ img_info.path }' /></a>")
 
-            $("#" + img_id).data("orig_width", img_info.width)
-            $("#" + img_id).data("orig_height", img_info.height)
-            $("#" + img_id).css("margin", option.margin / 2)
+            $("#" + img_id)
+                .data("orig_width", img_info.width)
+                .data("orig_height", img_info.height)
+
+            $("#" + img_id).find("img")
+                .css("margin", option.margin / 2)
 
             $("#" + img_id)._setHeight(option.min_height)
 
         gallery._relayout(img_info_items, option)
 
         $(window).resize ()->
-            gallery.find("img").each ()->
-                $(this)._setHeight(option.min_height)
-                full_image_path = get_display_image_url( $(this).attr("src") )
-                $(this).parent().attr("href", full_image_path)
+            gallery.find("a").each ()->
+                full_image_path = get_display_image_url( $(this).find("img").attr("src") )
+                $(this)
+                    .attr("href", full_image_path)
+                    ._setHeight(option.min_height)
             gallery._relayout(img_info_items, option)
+
+    _setThumbSize: (width, height)->
+        $(this).width(width).height(height)
+        $(this).find("img").width(width).height(height)
 
     _setHeight: (height)->
         orig_width = $(this).data("orig_width")
@@ -81,26 +89,26 @@ $.fn.extend
         width = height / orig_height * orig_width
 
         if width < orig_width and height < orig_height
-            $(this).width(width).height(height)
+            $(this)._setThumbSize(width, height)
 
     _resizeImage: (ratio)->
         orig_width = $(this).data("orig_width")
         orig_height = $(this).data("orig_height")
-        current_width = $(this).width()
-        current_height = $(this).height()
+        current_width = $(this).find("img").width()
+        current_height = $(this).find("img").height()
         new_width = current_width * ratio
         new_height = current_height * ratio
 
         if new_width < orig_width and new_height < orig_height
-            $(this).width(new_width).height(new_height)
+            $(this)._setThumbSize(new_width, new_height)
         else
-            $(this).width(orig_width).height(orig_height)
+            $(this)._setThumbSize(orig_width, orig_height)
 
     _relayout: (img_info_items, option)->
         max_total_width = $(this).innerWidth() - 10
 
         rows = {}
-        $(this).find("img").each ()->
+        $(this).find("a").each ()->
             top = $(this).position().top
             if rows[top]?
                 rows[top].push $(this).attr("id")
@@ -112,8 +120,7 @@ $.fn.extend
             current_total_width = 0
             for img_id in img_id_list
                 do (img_id)->
-                    current_total_width += $("#" + img_id).width()
-
+                    current_total_width += $("#" + img_id).find("img").width()
             # caculate resize ratio
             resize_ratio = (max_total_width - option.margin * (img_id_list.length - 1)) / current_total_width
 
