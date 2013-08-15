@@ -1,0 +1,28 @@
+/* light background theme */
+// $color_front:   #000000;
+// $color_back:    #ffffff;
+// $color_shadow:  $color_front * 0.2 + $color_back * 0.8;
+// $color_middle:  $color_front * 0.5 + $color_back * 0.5;
+
+/* dark background theme */
+$color_front:   #ffffff;
+$color_back:    #000000;
+$color_shadow:  $color_front;
+$color_middle:  $color_front * 0.6 + $color_back * 0.4;
+
+
+
+/* Do not change settings below this line if you're just changing themes */
+
+$color_text:    $color_front * 0.75 + $color_back * 0.25;
+
+body {
+  background-color: $color_back;
+}
+
+#img-container {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  text-align: center;
+}
