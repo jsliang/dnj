@@ -33,44 +33,27 @@ $.fn.extend
 
         $("body").append(scrolltop_bar)
 
-    lazyLoad: (template_id)->
-        refresh_spin_icon_template = $(template_id).clone()
-        $(template_id).hide()
-
+    lazyLoad: ()->
         gallery = $(this)
         gallery.find("img").each ()->
             img = $(this)
 
             if img.position().top > $(window).height()
-                my_spin_icon = refresh_spin_icon_template.clone()
-                my_spin_icon
-                    .attr("id", null)
-                    .addClass("_image_not_loaded")
-                    .attr("my_img_id", img.parent().attr("id"))
-                    .css("position", "relative")
-                    .css("top", (img.parent().height() - my_spin_icon.height()) / 2)
-
-                $(window).resize ()->
-                    my_spin_icon.css("top", (img.parent().height() - my_spin_icon.height()) / 2)
-
-                img.before(my_spin_icon)
                 img
-                    .css("position", "relative")
-                    .css("top", "-#{ my_spin_icon.height() }px")
+                    .addClass("_image_not_loaded")
                     .hide() # hide image first
             else
                 img.attr("src", img.attr("data-src"))
 
         $(window).scroll ()->
             gallery.find("._image_not_loaded").each ()->
-                my_spin_icon = $(this)
+                img = $(this)
                 current_scrolltop = $(window).scrollTop()
                 current_scrollbottom = $(window).scrollTop() + $(window).height()
-                img_top = my_spin_icon.parent().position().top
+                img_top = img.parent().position().top
                 if img_top > current_scrolltop and img_top < current_scrollbottom
-                    img = $("#" + my_spin_icon.attr("my_img_id")).find("img")
                     img.attr("src", img.attr("data-src")).show()
-                    my_spin_icon.removeClass("_image_not_loaded")
+                    img.removeClass("_image_not_loaded")
 
     gallery: (img_info_items, option = {min_height: 200, margin: 6})->
         gallery = $(this)
@@ -179,4 +162,4 @@ $(document).ready ()->
     $("#gallery").gallery(img_info_items)
     $("#scroll-top-bar")
         .fixedScrollTopBar()
-        .lazyLoad("#refresh_spin_icon_template")
+        .lazyLoad()

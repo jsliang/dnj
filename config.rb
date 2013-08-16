@@ -4,7 +4,7 @@
 http_path = "/"
 css_dir = "css"
 sass_dir = "css"
-#images_dir = "images"
+images_dir = "images"
 javascripts_dir = "js"
 fireapp_coffeescripts_dir = "js"
 

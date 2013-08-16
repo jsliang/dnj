@@ -1,15 +1,16 @@
 /* light background theme */
-$color_front:   #000000;
-$color_back:    #ffffff;
-$color_shadow:  $color_front * 0.2 + $color_back * 0.8;
-$color_middle:  $color_front * 0.5 + $color_back * 0.5;
+// $color_front:   #000000;
+// $color_back:    #ffffff;
+// $color_shadow:  $color_front * 0.2 + $color_back * 0.8;
+// $color_middle:  $color_front * 0.5 + $color_back * 0.5;
 
 /* dark background theme */
-// $color_front:   #ffffff;
-// $color_back:    #000000;
-// $color_shadow:  $color_front;
-// $color_middle:  $color_front * 0.6 + $color_back * 0.4;
+$color_front:   #ffffff;
+$color_back:    #000000;
+$color_shadow:  $color_front;
+$color_middle:  $color_front * 0.6 + $color_back * 0.4;
 
+$color_img_bgcolor: #808080;
 
 
 /* Do not change settings below this line if you're just changing themes */
@@ -18,11 +19,12 @@ $color_text:    $color_front * 0.75 + $color_back * 0.25;
 
 #gallery {
   a {
+    background-color: $color_img_bgcolor;
+    background-image: url(../images/spin.gif);
+    background-position: center center;
+    background-repeat: no-repeat;
     display: block;
     float: left;
-    #refresh_spin_icon_template, ._lazyLoad_spin_icon {
-      color: $color_front;
-    }
   }
 }
 
@@ -183,8 +185,10 @@ nav {
 
 .footer-container footer {
   color: $color_front;
+  font-family: "Arial Narrow";
+  font-size: 0.9em;
   padding: 20px 0;
-  text-align: right;
+  text-align: center;
 }
 
 /* ===============
