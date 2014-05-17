@@ -359,6 +359,7 @@
   $.fn.extend({
     fixedScrollTopBar: function(option) {
       var scrolltop_bar, slowly_scroll_top;
+
       if (option == null) {
         option = {
           opacity: 0.7
