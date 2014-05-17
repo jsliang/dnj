@@ -1,7 +1,7 @@
 (function() {
-  var $, img_info_items;
+  var $, img_info_test;
 
-  img_info_items = {
+  img_info_test = {
     '000_117cdac4e563e94a890458a9f463dddd': {
       "path": "https://lh6.googleusercontent.com/-1l2ufUNTVgk/TtRTjLcx09I/AAAAAAAAPhQ/9sY2SsiXUJA/s700/20289602_dPWzJz.jpg",
       "height": 700,
@@ -368,6 +368,7 @@
       $(this).css("opacity", 0);
       scrolltop_bar.css("bottom", 0).css("position", "fixed").css("width", "100%").css("opacity", 0).click(slowly_scroll_top = function() {
         var current_top;
+
         current_top = $(window).scrollTop();
         if (current_top > 1) {
           $(window).scrollTop(Math.round(current_top * 0.66));
@@ -394,9 +395,11 @@
     },
     lazyLoad: function() {
       var gallery;
+
       gallery = $(this);
       gallery.find("img").each(function() {
         var img;
+
         img = $(this);
         if (img.position().top > $(window).height()) {
           return img.addClass("_image_not_loaded").hide();
@@ -407,6 +410,7 @@
       return $(window).scroll(function() {
         return gallery.find("._image_not_loaded").each(function() {
           var current_scrollbottom, current_scrolltop, img, img_top;
+
           img = $(this);
           current_scrolltop = $(window).scrollTop();
           current_scrollbottom = $(window).scrollTop() + $(window).height();
@@ -420,6 +424,7 @@
     },
     gallery: function(img_info_items, option) {
       var full_image_path, gallery, get_display_image_url, get_large_img_path, img_gallery, img_id, img_info;
+
       if (option == null) {
         option = {
           min_height: 200,
@@ -430,6 +435,7 @@
       gallery.css("text-align", "center");
       get_large_img_path = function(img_path) {
         var img_file_name, img_path_prefix, pos_2nd_last_slash, pos_last_slash, screen_dimension_max;
+
         pos_last_slash = img_path.lastIndexOf("/");
         img_file_name = img_path.substr(pos_last_slash, img_path.length - pos_last_slash);
         pos_2nd_last_slash = img_path.substr(0, pos_last_slash).lastIndexOf("/");
@@ -446,6 +452,7 @@
       };
       img_gallery = (function() {
         var _results;
+
         _results = [];
         for (img_id in img_info_items) {
           img_info = img_info_items[img_id];
@@ -473,6 +480,7 @@
     },
     _setHeight: function(height) {
       var orig_height, orig_width, width;
+
       orig_width = $(this).data("orig_width");
       orig_height = $(this).data("orig_height");
       width = height / orig_height * orig_width;
@@ -482,6 +490,7 @@
     },
     _resizeImage: function(ratio) {
       var current_height, current_width, new_height, new_width, orig_height, orig_width;
+
       orig_width = $(this).data("orig_width");
       orig_height = $(this).data("orig_height");
       current_width = $(this).data("current_width");
@@ -496,10 +505,12 @@
     },
     _relayout: function(img_info_items, option) {
       var current_total_width, first_pic, img_id, img_id_list, last_pic, max_total_width, resize_ratio, row_top, rows, stretch_row;
+
       max_total_width = $(this).innerWidth() - 10;
       rows = {};
       $(this).find("a").each(function() {
         var top;
+
         top = $(this).position().top;
         if (rows[top] != null) {
           return rows[top].push($(this).attr("id"));
@@ -509,6 +520,7 @@
       });
       return stretch_row = (function() {
         var _fn, _fn1, _i, _j, _len, _len1, _results;
+
         _results = [];
         for (row_top in rows) {
           img_id_list = rows[row_top];
@@ -539,7 +551,7 @@
   });
 
   $(document).ready(function() {
-    $("#gallery").gallery(img_info_items);
+    $("#gallery").gallery(img_info_test);
     return $("#scroll-top-bar").fixedScrollTopBar().lazyLoad();
   });
 
