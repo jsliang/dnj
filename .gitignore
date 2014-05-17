@@ -1,0 +1,4 @@
+.coffeescript-cache/
+.DS_Store
+.sass-cache/
+fire_app_log.txt
