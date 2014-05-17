@@ -79,7 +79,7 @@ img_list = get_img_list(os.path.abspath("."))
 thumb_list = get_thumbnail_list(img_list, max_thumb_dimension)
 img_info_items = get_img_info_items(thumb_list)
 
-print "img_info_items = {"
+print "{"
 for key in sorted(img_info_items.iterkeys()):
     print "'%s': %s," % (key, json.dumps(img_info_items[key]))
-print "}"
+print "}".replace("},}", "}}")
