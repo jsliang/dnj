@@ -33,16 +33,16 @@ max_thumb_dimension = 700
 
 def get_userid_albumid(url):
     """
-    Retrieve userid & albumnid from Google Plus album URL
+    Retrieve userid & albumid from Google Plus album URL
 
     >>> get_userid_albumid("https://plus.google.com/photos/103268673393726667616/albums/5906286878841962305/")
-    {'albumnid': '5906286878841962305', 'userid': '103268673393726667616'}
+    {'albumid': '5906286878841962305', 'userid': '103268673393726667616'}
 
     >>> get_userid_albumid("https://plus.google.com/photos/103268673393726667616/albums/5906286878841962305")
-    {'albumnid': '5906286878841962305', 'userid': '103268673393726667616'}
+    {'albumid': '5906286878841962305', 'userid': '103268673393726667616'}
 
     >>> get_userid_albumid("http://plus.google.com/photos/103268673393726667616/albums/5906286878841962305")
-    {'albumnid': '5906286878841962305', 'userid': '103268673393726667616'}
+    {'albumid': '5906286878841962305', 'userid': '103268673393726667616'}
 
     >>> get_userid_albumid("https://plus.google.com/photos/103268673393726667616")
 
@@ -58,24 +58,26 @@ def get_userid_albumid(url):
         url = url[0:len(url) - 1]
 
     try:
-        [__, userid, __, albumnid] = url.rsplit("/", 3)
+        [__, userid_str, __, albumid_str] = url.rsplit("/", 3)
 
-        userid_test_int = int(userid)
-        albumnid_test_int = int(albumnid)
+        # userid_str & albumid_str shall be integers
+        # if they aren't, most probably the URL is not in an expected format
+        userid = int(userid_str)
+        albumid = int(albumid_str)
 
-        return {"userid": userid, "albumnid": albumnid}
+        return {"userid": "%d" % userid, "albumid": "%d" % albumid}
     except ValueError:
         return None
 
 
 def get_album_img_info_items(album_info, max_thumb_dimension):
     userid = album_info["userid"]
-    albumnid = album_info["albumnid"]
+    albumid = album_info["albumid"]
 
     img_info_items = {}
     gd_client = gdata.photos.service.PhotosService()
     photos = gd_client.GetFeed(
-        '/data/feed/api/user/%s/albumid/%s?kind=photo' % (userid, albumnid))
+        '/data/feed/api/user/%s/albumid/%s?kind=photo' % (userid, albumid))
     for photo in photos.entry:
         photo_url = photo.content.src
         photo_url_split = photo_url.rsplit("/", 1)
@@ -109,8 +111,8 @@ if __name__ == "__main__":
     album_info = get_userid_albumid(gplus_album_url)
     img_info_items = get_album_img_info_items(album_info, max_thumb_dimension)
 
-    json_str = "img_info_items = {"
+    json_str = "{"
     for key in sorted(img_info_items.iterkeys()):
         json_str += "'%s': %s," % (key, json.dumps(img_info_items[key]))
     json_str += "}"
-    print json_str
+    print json_str.replace("},}", "}}")
