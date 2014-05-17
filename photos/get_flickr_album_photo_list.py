@@ -64,10 +64,10 @@ def get_photoinfo(photo_id, thumbnail_size):
     Retrieve path, width, height from a given photo_id and thumbnail_size
 
     >>> get_photoinfo(9581934291, u'Medium 640')
-    {'path': u'https://farm3.staticflickr.com/2883/9581934291_b971006ca6_z.jpg', 'height': 427, 'width': 640}
+    {'path_large': u'https://farm3.staticflickr.com/2883/9581934291_78944dc642_o.jpg', 'path': u'https://farm3.staticflickr.com/2883/9581934291_b971006ca6_z.jpg', 'height': 427, 'width': 640}
 
     >>> get_photoinfo(9584721568, u'Original')
-    {'path': u'https://farm8.staticflickr.com/7347/9584721568_74b5349ef8_o.jpg', 'height': 800, 'width': 1200}
+    {'path_large': u'https://farm8.staticflickr.com/7347/9584721568_74b5349ef8_o.jpg', 'path': u'https://farm8.staticflickr.com/7347/9584721568_74b5349ef8_o.jpg', 'height': 800, 'width': 1200}
 
     >>> get_photoinfo(12345678, u'Original')
     """
@@ -77,19 +77,30 @@ def get_photoinfo(photo_id, thumbnail_size):
     photo_info = json.loads(photo_info_resp.text)
 
     photo_sizes = photo_info[u'sizes'][u'size']
+    ret = None
     for size in photo_sizes:
         if size[u"label"] == thumbnail_size:
-
-            photo_url = size[u'source']
+            path = size[u'source']
             width = int(size[u'width'])
             height = int(size[u'height'])
 
-            img_info = {"path": photo_url,
+            img_info = {"path": path,
                         "width": width,
                         "height": height}
+            if ret == None:
+                ret = img_info
+            else:
+                ret.update(img_info)
 
-            return img_info
-    return None
+        if size[u"label"] == u'Original':
+            path_large = size[u'source']
+            img_info = {"path_large": path_large}
+            if ret == None:
+                ret = img_info
+            else:
+                ret.update(img_info)
+
+    return ret
 
 
 def get_set_img_info_items(set_id, thumbnail_size):
