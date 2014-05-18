@@ -85,6 +85,32 @@ textarea {
 /* ===================
     ALL: Gray Theme
    =================== */
+
+.header-container.floatnav {
+  background-color: $color_back;
+  position: fixed;
+  width: 100%;
+  opacity: 0.8;
+
+  @media only screen and (min-width: 500px) {
+    header {
+      h1 {
+        font-size: 2em;
+        line-height: 1em;
+      }
+    }
+  }
+
+  nav ul {
+    margin: 0;
+  }
+  header {
+    h1 {
+      margin: 0.5em 0;
+    }
+  }
+}
+
 header {
   h1 {
     color: $color_front;
@@ -96,9 +122,19 @@ header {
 }
 
 @media only screen and (max-width: 500px) {
+  .main-container {
+      p {
+        font-size: 0.9em;
+      }
+  }
+  nav ul {
+    margin: 0;
+  }
   header {
     h1 {
-      font-size: 3em;
+      font-size: 1.5em;
+      line-height: 1em;
+      margin: 0.5em 0;
     }
   }
 }

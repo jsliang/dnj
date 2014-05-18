@@ -41,6 +41,22 @@
       });
       return $("body").append(scrolltop_bar);
     },
+    fixedNavBar: function() {
+      var scrolltop_bar;
+
+      scrolltop_bar = $(this);
+      return $(window).scroll(function() {
+        if ($(window).scrollTop() === 0 && scrolltop_bar.hasClass("floatnav")) {
+          return scrolltop_bar.removeClass("floatnav");
+        } else if ($(window).scrollTop() <= scrolltop_bar.height() && !scrolltop_bar.hasClass("floatnav")) {
+          scrolltop_bar.addClass("floatnav");
+          $("body").css("margin-top", scrolltop_bar.height());
+          return scrolltop_bar.css("margin-top", -scrolltop_bar.height());
+        } else if ($(window).scrollTop() > scrolltop_bar.height() && !scrolltop_bar.hasClass("floatnav")) {
+          return scrolltop_bar.addClass("floatnav");
+        }
+      });
+    },
     lazyLoad: function() {
       var gallery;
 

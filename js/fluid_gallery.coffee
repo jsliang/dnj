@@ -31,6 +31,19 @@ $.fn.extend
 
         $("body").append(scrolltop_bar)
 
+    fixedNavBar: ()->
+        scrolltop_bar = $(this)
+
+        $(window).scroll ()->
+            if $(window).scrollTop() is 0 and scrolltop_bar.hasClass("floatnav")
+                scrolltop_bar.removeClass("floatnav")
+            else if $(window).scrollTop() <= scrolltop_bar.height() and not scrolltop_bar.hasClass("floatnav")
+                scrolltop_bar.addClass("floatnav")
+                $("body").css("margin-top", scrolltop_bar.height())
+                scrolltop_bar.css("margin-top", -scrolltop_bar.height())
+            else if $(window).scrollTop() > scrolltop_bar.height() and not scrolltop_bar.hasClass("floatnav")
+                scrolltop_bar.addClass("floatnav")
+
     lazyLoad: ()->
         gallery = $(this)
         gallery.find("img").each ()->
