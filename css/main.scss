@@ -148,12 +148,13 @@ nav {
     padding: 0.5em 0;
     text-align: center;
     text-decoration: none;
-    width: 99%/$a_count;
+    white-space: nowrap;
+    width: 100%/$a_count;
 
     &:hover, .mobile_nav_a_hover {
       background-color: $color_back;
-      border-bottom: 1px dashed $color_front;
-      border-top: 1px dashed $color_front;
+      border-bottom: 1px solid $color_front;
+      border-top: 1px solid $color_front;
       color: $color_front;
       text-decoration: none;
       text-shadow: 1px 1px 2px $color_shadow;
@@ -242,11 +243,11 @@ nav {
    Media Queries
    ========================================================================== */
 
-@media only screen and (min-width: 480px) {
+@media only screen and (min-width: 500px) {
   /* ====================
       INTERMEDIATE: Menu
      ==================== */
-  $a_horizontal_margin: 2%;
+  $a_horizontal_margin: 1%;
   $a_width: (100% - $a_horizontal_margin * 2 * ($a_count - 1))/$a_count;
   nav {
     ul{
